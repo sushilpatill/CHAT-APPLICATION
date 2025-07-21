@@ -98,6 +98,29 @@ export default function Chat() {
       if (error) throw error;
       
       setNewMessage('');
+      
+      // Auto-responder for testing
+      setTimeout(async () => {
+        const responses = [
+          "Hello there! How are you?",
+          "That's interesting!",
+          "Tell me more about that.",
+          "Nice to meet you!",
+          "What's on your mind?",
+          "I'm here and listening!"
+        ];
+        
+        const randomResponse = responses[Math.floor(Math.random() * responses.length)];
+        
+        await supabase
+          .from('messages')
+          .insert({
+            user_id: crypto.randomUUID(),
+            username: 'ChatBot',
+            content: randomResponse
+          });
+      }, 1000 + Math.random() * 2000); // Random delay between 1-3 seconds
+      
     } catch (error) {
       console.error('Error sending message:', error);
       toast({
