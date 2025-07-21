@@ -14,6 +14,68 @@ export type Database = {
   }
   public: {
     Tables: {
+      document_operations: {
+        Row: {
+          created_at: string
+          document_id: string
+          id: string
+          operation: Json
+          user_id: string
+          username: string
+        }
+        Insert: {
+          created_at?: string
+          document_id: string
+          id?: string
+          operation: Json
+          user_id: string
+          username: string
+        }
+        Update: {
+          created_at?: string
+          document_id?: string
+          id?: string
+          operation?: Json
+          user_id?: string
+          username?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "document_operations_document_id_fkey"
+            columns: ["document_id"]
+            isOneToOne: false
+            referencedRelation: "documents"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      documents: {
+        Row: {
+          content: Json
+          created_at: string
+          created_by: string
+          id: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          content?: Json
+          created_at?: string
+          created_by: string
+          id?: string
+          title?: string
+          updated_at?: string
+        }
+        Update: {
+          content?: Json
+          created_at?: string
+          created_by?: string
+          id?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       messages: {
         Row: {
           content: string
@@ -37,6 +99,41 @@ export type Database = {
           username?: string
         }
         Relationships: []
+      }
+      user_presence: {
+        Row: {
+          cursor_position: number | null
+          document_id: string
+          id: string
+          last_seen: string
+          user_id: string
+          username: string
+        }
+        Insert: {
+          cursor_position?: number | null
+          document_id: string
+          id?: string
+          last_seen?: string
+          user_id: string
+          username: string
+        }
+        Update: {
+          cursor_position?: number | null
+          document_id?: string
+          id?: string
+          last_seen?: string
+          user_id?: string
+          username?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_presence_document_id_fkey"
+            columns: ["document_id"]
+            isOneToOne: false
+            referencedRelation: "documents"
+            referencedColumns: ["id"]
+          },
+        ]
       }
     }
     Views: {
